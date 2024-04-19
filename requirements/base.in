@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+chromadb
+gunicorn
+ipykernel
+deepface
+tf-keras
+ultralytics
+pinecone-client
+facenet-pytorch
+pydantic
+bcrypt==4.0.1
+passlib[bcrypt]
+PyJWT
+pydantic_settings
+python-multipart

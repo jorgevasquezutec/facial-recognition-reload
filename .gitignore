@@ -1,0 +1,5 @@
+faces/
+query/
+__pycache__/
+db/
+.env
