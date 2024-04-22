@@ -9,6 +9,8 @@ services:
     image: facial-reload
     volumes:
       - ./:/app
+      - ./weights:/root/.deepface/weights/
+      - ./db:/app/db
     ports:
       - '5000:5000'
     networks:

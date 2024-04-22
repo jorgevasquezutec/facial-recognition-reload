@@ -24,6 +24,15 @@ class BackendType(Enum):
     yolov8 = "yolov8"
     yunet = "yunet"
     centerface = "centerface"
+    
+class NormalizationType(Enum):
+    base = "base"
+    raw = "raw"
+    Facenet = "Facenet"
+    Facenet2018 = "Facenet2018"
+    VGGFace = "VGGFace"
+    VGGFace2 = "VGGFace2"
+    ArcFace = "ArcFace"
 
 class DistanceMetricType(Enum):
     cosine = "cosine"

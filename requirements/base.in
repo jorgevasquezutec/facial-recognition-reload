@@ -16,3 +16,6 @@ pydantic_settings
 python-multipart
 filetype
 pinecone-client
+dlib
+cmake
+mediapipe
