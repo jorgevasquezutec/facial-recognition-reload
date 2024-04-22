@@ -14,12 +14,12 @@ class FaceDetector:
     
     def get_image_embedding(self, image_path):
         try:
-            image_embeding_obj= DeepFace.represent(image_path, model_name=self.model , detector_backend=self.backend)
+            image_embeding_obj= DeepFace.represent(image_path, model_name=self.model , detector_backend=self.backend,enforce_detection=False)
             count_image = len(image_embeding_obj)
             if count_image > 1:
-                raise ManyFacesFound
+                raise ManyFacesFound(f'Many faces found in the image: {image_path}')
             elif count_image == 0:
-                raise FaceNotFound
+                raise FaceNotFound(f'Face not found in the image: {image_path}')
             image_embedding = image_embeding_obj[0]["embedding"]
             return image_embedding
         except ManyFacesFound as e:
@@ -28,7 +28,7 @@ class FaceDetector:
             raise e
         except Exception as e:
             print(e)
-            raise FaceNotFound("No se pudo procesar la imagen")
+            raise FaceNotFound(f'Face not found in the image: {image_path}')
     
     def verify_embeding(self, image1_embedding, image2_embedding):
         distance = DeepFace.verification.find_distance(image1_embedding, image2_embedding, self.distance_metric)

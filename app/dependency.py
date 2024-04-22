@@ -6,7 +6,7 @@ from app.dbchroma import DbChroma
 
 model = ModelType.GhostFaceNet.value
 distance_metric = DistanceMetricType.cosine.value
-backend = BackendType.fastmtcnn.value
+backend = BackendType.retinaface.value
 
 class DetectorInstance:
     instance = None

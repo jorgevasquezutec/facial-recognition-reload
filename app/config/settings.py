@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     SECRET_KEY: str
     AUTH_ROUTE: str
+    PINECONE_API_KEY: str
 
 
 
