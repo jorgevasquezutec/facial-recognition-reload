@@ -1,10 +1,14 @@
-from fastapi import FastAPI,Request, Response
-from fastapi.routing import APIRoute
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.config.settings import api_settings
 from app.api.api import api_router
-
 import uvicorn
+from app.dependency import ChromaInstance, DetectorInstance
+from app.face_detector import FaceDetector
+from app.dbchroma import DbChroma
+
+
+
 
 app = FastAPI(
     title=api_settings.TITLE,
@@ -20,12 +24,11 @@ app.add_middleware(
         allow_headers=["*"],
 )
 
-
 app.include_router(api_router, prefix=api_settings.PREFIX)
 
 
-def run():
+if __name__ == "__main__":
     uvicorn.run(app, 
-                host=api_settings.HOST, 
-                port=api_settings.PORT
-                )
+        host=api_settings.HOST, 
+        port=api_settings.PORT
+        )

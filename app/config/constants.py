@@ -30,11 +30,12 @@ class DistanceMetricType(Enum):
     euclidean = "euclidean"
     euclidean_l2 = "euclidean_l2"
 
-
-CromadbPath = './db'
-collection128 = 'faces128'
-collection512 = 'faces512'
-n_results = 1
+CHROMA_PATH = './db'
+CHROMA_COLLECTION = 'faces'
+CHROMA_N_RESULTS = 3
+CHROMA_METADATA={"hnsw:space": "cosine"}
 
 AUTH_PREFIX = '/auth'
 FACIAL_PREFIX = '/facial'
+MAX_FILE_SIZE = 2097152 # 2MB
+ALOWED_FILE_TYPES = ["image/png", "image/jpeg", "image/jpg", "png", "jpeg", "jpg"]

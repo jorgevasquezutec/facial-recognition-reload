@@ -1,24 +1,32 @@
 import chromadb
 from chromadb.config import Settings
-from app.dependency import detector
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from app.config.constants import n_results
-
+from app.config.constants import CHROMA_N_RESULTS,CHROMA_METADATA
+from app.face_detector import FaceDetector
+from chromadb.api.models.Collection import Collection
 class DeepFaceEmbedding(EmbeddingFunction):
+    
+    def __init__(self,detector : FaceDetector):
+        self.detector = detector
     def __call__(self, input: Documents) -> Embeddings:
         embeddings = []
         for doc in input:
-            embeddings.append(detector.get_image_embedding(doc))
+            embeddings.append(self.detector.get_image_embedding(doc))
         return embeddings
 
 
 class DbChroma:
-    def __init__(self, path,name_collection):
+    def __init__(self, 
+                 path : str,
+                 name_collection : str,
+                 detector : FaceDetector
+                 ):
         self.path = path
         self.name_collection = name_collection
+        self.detector = detector
         self.client = chromadb.PersistentClient(path=self.path,settings=Settings(allow_reset=True))
-        self.collection = self.client.get_or_create_collection(self.name_collection,
-        embedding_function=DeepFaceEmbedding(), metadata={"hnsw:space": "cosine"})
+        self.collection : Collection = self.client.get_or_create_collection(self.name_collection,
+        embedding_function=DeepFaceEmbedding(self.detector), metadata=CHROMA_METADATA)
 
     def insertByImage(self,images, ids):
         self.collection.add(
@@ -35,13 +43,13 @@ class DbChroma:
     def queryEmbedding(self,embedding):
         return self.collection.query(
             query_embeddings=embedding,
-            n_results=n_results,
+            n_results=CHROMA_N_RESULTS,
         )
     
     def queryImage(self,image):
         return self.collection.query(
             query_images=[image],
-            n_results=n_results,
+            n_results=CHROMA_N_RESULTS,
             include=['embeddings','distances']
         )
     
@@ -65,3 +73,26 @@ class DbChroma:
         self.collection.delete(
             ids=[id]
         )
+    def count(self):
+        return self.collection.count()
+    
+
+    def datatable(self, page=0, size=10 , ids: list[str] = [] , include: list[str] = []):
+        data = self.collection.get(
+            limit=size,
+            offset=(page*size),
+            ids=ids,
+            include=include
+        )
+        total = self.collection.count()
+
+        return {
+            "items": data,
+            "total": total,
+            "page": page,
+            "pages": (total+size-1)//size,
+            "size": size
+        }
+
+    def getCollection(self):
+        return self.collection
