@@ -1,0 +1,6 @@
+*.ipynb
+dnis/
+faces/
+query/
+.vscode/
+__pycache__

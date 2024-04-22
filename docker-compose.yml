@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    hostname: facial-reload
+    container_name: facial-reload
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: facial-reload
+    volumes:
+      - ./:/app
+    ports:
+      - '5000:5000'
+    networks:
+      - api-network
+    env_file:
+      - ./.env
+
+networks:
+  api-network:
+    driver: bridge
