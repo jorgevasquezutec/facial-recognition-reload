@@ -1,9 +1,10 @@
 import chromadb
-from chromadb.config import Settings
+# from chromadb.config import Settings
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from app.config.constants import CHROMA_N_RESULTS,CHROMA_METADATA
 from app.face_detector import FaceDetector
 from chromadb.api.models.Collection import Collection
+from app.config.settings import api_settings
 class DeepFaceEmbedding(EmbeddingFunction):
     
     def __init__(self,detector : FaceDetector):
@@ -24,7 +25,8 @@ class DbChroma:
         self.path = path
         self.name_collection = name_collection
         self.detector = detector
-        self.client = chromadb.PersistentClient(path=self.path,settings=Settings(allow_reset=True))
+        self.client = chromadb.HttpClient(host=api_settings.CHROMA_HOST,port=api_settings.CHROMA_PORT)
+        # self.client = chromadb.PersistentClient(path=self.path,settings=Settings(allow_reset=True))
         self.collection : Collection = self.client.get_or_create_collection(self.name_collection,
         embedding_function=DeepFaceEmbedding(self.detector), metadata=CHROMA_METADATA)
 
@@ -40,16 +42,16 @@ class DbChroma:
             ids=ids
         )
     
-    def queryEmbedding(self,embedding):
+    def queryEmbedding(self,embedding,n_result = CHROMA_N_RESULTS):
         return self.collection.query(
             query_embeddings=embedding,
-            n_results=CHROMA_N_RESULTS,
+            n_results=n_result,
         )
     
-    def queryImage(self,image):
+    def queryImage(self,image,n_result = CHROMA_N_RESULTS):
         return self.collection.query(
             query_images=[image],
-            n_results=CHROMA_N_RESULTS,
+            n_results=n_result,
             include=['embeddings','distances']
         )
     
@@ -58,15 +60,15 @@ class DbChroma:
             ids=[id],
             include=['embeddings']
         )
-    def upsertById(self,id,embedding):
+    def upsertByIds(self,ids,embeddings):
         self.collection.upsert(
-            ids=[id],
-            embeddings=[embedding]
+            ids=ids,
+            embeddings=embeddings
         )
-    def upsertByImage(self,image,embedding):
+    def upsertByImage(self,images,ids):
         self.collection.upsert(
-            images=[image],
-            embeddings=[embedding]
+            images=images,
+            ids=ids
         )
     
     def deleteById(self,id):

@@ -1,5 +1,5 @@
 from typing import List, Optional
-from fastapi import APIRouter, Form, Depends, HTTPException, File, Query, UploadFile
+from fastapi import APIRouter, Form, Depends, HTTPException, Path, Query, UploadFile
 from app.utils.security import get_current_active_user
 from fastapi import Depends
 from typing_extensions import Annotated
@@ -48,9 +48,9 @@ def facial_detect(
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.delete("/delete")
+@router.delete("/{document_number}")
 def facial_delete(
-    document_number: Annotated[str, Form(title="Document Number", description="Document Number")],
+    document_number: Annotated[str, Path(title="Document Number", description="Document Number")],
     db = Depends(get_db)
 ):
     try:
@@ -59,14 +59,20 @@ def facial_delete(
         raise HTTPException(status_code=400, detail=str(e))
     
 
-@router.put("")
+@router.put("/{document_number}")
 def facial_update(
     *,
     image : UploadFile,
-    document_number: Annotated[str, Form(title="Document Number", description="Document Number")],
+    document_number: Annotated[str, Path(title="Document Number", description="Document Number")],
     db = Depends(get_db)
 ):
     try:
-        return update_face(db,image, document_number)
+        update_face(db,image, document_number)
+        
+        return {
+            "message": "Se actualizo el registro", 
+            "document_number": document_number            
+        }
+        
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

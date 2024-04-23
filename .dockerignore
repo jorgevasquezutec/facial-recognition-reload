@@ -4,3 +4,5 @@ faces/
 query/
 .vscode/
 __pycache__
+other/
+db/

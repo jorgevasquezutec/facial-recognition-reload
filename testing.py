@@ -1,5 +1,6 @@
 import csv
 import time
+import os
 from app.config.constants import ModelType, DistanceMetricType, BackendType, NormalizationType
 from deepface import DeepFace
 from concurrent.futures import ThreadPoolExecutor
@@ -7,6 +8,8 @@ from concurrent.futures import ThreadPoolExecutor
 image_input = './faces/72391682.jpg'
 image_correct = './query/jorge.jpeg'
 image_fail = './dnis/70543329.jpg'
+
+progress_file = 'progress.txt'
 
 def run_verify_wrapper(args):
     return run_verify(*args)
@@ -53,17 +56,22 @@ def testings():
                                                                for distance in distanceList
                                                                for backend in backendList
                                                                for normalization in normalizationList]
-    # print(combinations)
-    len_combinations = len(combinations)
-    print(len_combinations)
+    
+    if os.path.exists(progress_file):
+        with open(progress_file, 'r') as f:
+            last_index = int(f.read().strip())
+            combinations = combinations[last_index:]
 
-    # with ThreadPoolExecutor() as executor:
-    #     results = list(executor.map(test_combination, combinations))
-
-    # with open('results.csv', 'w', newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(['Modelo', 'Distancia', 'Backend', 'Normalización', 'Tiempo promedio', 'Resultado1', 'Resultado2'])
-    #     writer.writerows(results)
+    print(len(combinations))
+    with open('results.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Modelo', 'Distancia', 'Backend', 'Normalización', 'Tiempo promedio', 'Resultado1', 'Resultado2'])
+        for i, combination in enumerate(combinations, start=1):
+            result = test_combination(combination)
+            writer.writerows([result])
+            # Guardar el índice de la última combinación probada
+            with open(progress_file, 'w') as f:
+                f.write(str(i))
 
 if __name__ == "__main__":
     number_test = 3

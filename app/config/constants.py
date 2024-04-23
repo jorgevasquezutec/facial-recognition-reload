@@ -5,7 +5,7 @@ class ModelType(Enum):
     Facenet = "Facenet"
     Facenet512 = "Facenet512"
     OpenFace = "OpenFace"
-    DeepFace = "DeepFace"
+    # DeepFace = "DeepFace"
     DeepID = "DeepID"
     ArcFace = "ArcFace"
     Dlib = "Dlib"

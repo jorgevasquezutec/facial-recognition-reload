@@ -5,3 +5,7 @@ db/
 .env
 dnis/
 weights/
+progress.txt
+results.csv
+.env.chroma
+other/

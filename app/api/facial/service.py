@@ -39,7 +39,8 @@ def detect_face(db:DbChroma, detector:FaceDetector , image : UploadFile):
         if verify['verify']:
             return {
                     "message": "Se encontraron coincidencias", 
-                    "document_number": ids[i]
+                    "document_number": ids[i],
+                    "distance": verify["distance"],
                     }
        
     return {

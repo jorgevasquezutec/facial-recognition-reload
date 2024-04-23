@@ -5,16 +5,23 @@ class FaceDetector:
     def __init__(self, 
                  model, 
                  distance_metric,
-                 backend
+                 backend,
+                 normalization
                  ):
         self.model = model
         self.distance_metric = distance_metric
         self.backend = backend
+        self.normalization = normalization
 
     
     def get_image_embedding(self, image_path):
         try:
-            image_embeding_obj= DeepFace.represent(image_path, model_name=self.model , detector_backend=self.backend,enforce_detection=False)
+            image_embeding_obj= DeepFace.represent(image_path,
+                                                   model_name=self.model, 
+                                                   detector_backend=self.backend,
+                                                   enforce_detection=False,
+                                                   normalization=self.normalization,
+                                                   )
             count_image = len(image_embeding_obj)
             if count_image > 1:
                 raise ManyFacesFound(f'Many faces found in the image: {image_path}')

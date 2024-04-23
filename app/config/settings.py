@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     AUTH_ROUTE: str
     PINECONE_API_KEY: str
+    CHROMA_HOST: str
+    CHROMA_PORT: int
 
 
 
