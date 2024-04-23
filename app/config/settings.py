@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     HOST: str
     PORT: int
     TITLE: str
-    PREFIX: str
+    API_PREFIX: str
     PASSWORD_ADMIN: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     SECRET_KEY: str

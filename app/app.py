@@ -6,11 +6,11 @@ from app.api.api import api_router
 import uvicorn
 
 
-docs_url = f'{api_settings.PREFIX}/docs'
+docs_url = f'{api_settings.API_PREFIX}/docs'
 
 app = FastAPI(
     title=api_settings.TITLE,
-    openapi_url=f'{api_settings.PREFIX}/openapi.json',
+    openapi_url=f'{api_settings.API_PREFIX}/openapi.json',
     docs_url=docs_url,
 )
 
@@ -22,7 +22,7 @@ app.add_middleware(
         allow_headers=["*"],
 )
 
-app.include_router(api_router, prefix=api_settings.PREFIX)
+app.include_router(api_router, prefix=api_settings.API_PREFIX)
 
 
 @app.get("/",include_in_schema=False)

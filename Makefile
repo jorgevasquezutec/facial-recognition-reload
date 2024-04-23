@@ -26,6 +26,9 @@ watch:
 extract-chroma:
 	 docker cp chroma:/chroma/chroma/. ./db
 
+import-chroma:
+	docker cp ./db/. chroma:/chroma/chroma/
+
 delete-chroma:
 	docker exec chroma rm -rf /chroma/chroma/
 

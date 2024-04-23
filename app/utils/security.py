@@ -13,7 +13,7 @@ from typing import Annotated
 from app.config.settings import api_settings
 from app.config.constants import AUTH_PREFIX
 
-complete_auth_route = api_settings.PREFIX + AUTH_PREFIX + api_settings.AUTH_ROUTE
+complete_auth_route = api_settings.API_PREFIX + AUTH_PREFIX + api_settings.AUTH_ROUTE
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=complete_auth_route)
 
