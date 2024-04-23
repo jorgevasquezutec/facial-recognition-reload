@@ -40,8 +40,8 @@ class DistanceMetricType(Enum):
     euclidean_l2 = "euclidean_l2"
 
 CHROMA_PATH = './db'
-CHROMA_COLLECTION = 'faces'
-CHROMA_N_RESULTS = 3
+COLLECTION = 'faces'
+N_RESULTS = 3
 CHROMA_METADATA={"hnsw:space": "cosine"}
 
 AUTH_PREFIX = '/auth'

@@ -1,3 +1,10 @@
+IMAGE_NAME=facial-recognition-reload
+VERSION=v1.0.0
+TAR_FILE = $(IMAGE_NAME)-$(VERSION).tar
+GZIP_FILE = $(TAR_FILE).gz
+DOCKER_HUB_ID= jorgevasquezutec
+
+
 conda-update:
 	conda env update --prune -f environment.yml
 
@@ -37,3 +44,12 @@ seed:
 
 seed-1:
 	python -m app.seeders.uploadChunk './dnis/*.jpg' --chunk 30
+
+
+hub:
+	docker tag $(IMAGE_NAME):$(VERSION) $(DOCKER_HUB_ID)/$(IMAGE_NAME):$(VERSION)
+	docker push $(DOCKER_HUB_ID)/$(IMAGE_NAME):$(VERSION)
+
+
+hub-image:
+	echo $(DOCKER_HUB_ID)/$(IMAGE_NAME):$(VERSION)

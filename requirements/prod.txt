@@ -42,6 +42,7 @@ cachetools==5.3.3
 certifi==2024.2.2
     # via
     #   kubernetes
+    #   pinecone-client
     #   pulsar-client
     #   requests
 cffi==1.16.0
@@ -370,6 +371,8 @@ pillow==10.3.0
     #   matplotlib
     #   retina-face
     #   torchvision
+pinecone-client==3.2.2
+    # via -r requirements/prod.in
 platformdirs==4.2.0
     # via jupyter-core
 posthog==3.5.0
@@ -542,6 +545,7 @@ tqdm==4.66.2
     #   deepface
     #   gdown
     #   huggingface-hub
+    #   pinecone-client
 traitlets==5.14.3
     # via
     #   comm
@@ -564,6 +568,7 @@ typing-extensions==4.11.0
     #   ipython
     #   opentelemetry-sdk
     #   optree
+    #   pinecone-client
     #   pydantic
     #   pydantic-core
     #   starlette
@@ -576,6 +581,7 @@ tzdata==2024.1
 urllib3==2.2.1
     # via
     #   kubernetes
+    #   pinecone-client
     #   requests
 uvicorn[standard]==0.29.0
     # via

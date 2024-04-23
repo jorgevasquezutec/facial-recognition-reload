@@ -14,3 +14,4 @@ filetype
 mediapipe
 tf-keras
 ipykernel
+pinecone-client
