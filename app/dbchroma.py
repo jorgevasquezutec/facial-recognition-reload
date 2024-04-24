@@ -75,7 +75,12 @@ class DbChroma(IdbVector):
         self.collection.delete(
             ids=[id]
         )
-        
+    
+    def insert_by_images(self, ids, images):
+        self.collection.add(
+            images=images,
+            ids=ids
+        )
 
 
 

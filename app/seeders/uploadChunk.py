@@ -18,7 +18,7 @@ def uploadByChunk(path, chunk_size=DEFAULT_CHUNK_SIZE):
         print(f"Uploading chunk {i // chunk_size + 1} of {total_chunks}")
         chunk = images[i:i + chunk_size]
         ids_chunk = ids[i:i + chunk_size]
-        db.insertByImage(chunk, ids_chunk)
+        db.insert_by_images(ids_chunk, chunk)
 
 def main():
     parser = argparse.ArgumentParser(description='Upload images by chunks.')

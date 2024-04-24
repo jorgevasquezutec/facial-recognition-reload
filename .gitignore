@@ -10,3 +10,9 @@ results.csv
 .env.chroma
 other/
 .env.local
+other2/
+other3/
+other4/
+other5/
+other6/
+*.zip

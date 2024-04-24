@@ -52,6 +52,17 @@ seed:
 seed-1:
 	python -m app.seeders.uploadChunk './dnis/*.jpg' --chunk 30
 
+seed-2:
+	python -m app.seeders.uploadChunk './other3/*.jpg' --chunk 30
+
+seed-3:
+	python -m app.seeders.uploadChunk './other4/*.jpg' --chunk 30
+
+seed-4:
+	python -m app.seeders.uploadChunk './other5/*.jpg' --chunk 30
+
+seed-6:
+	python -m app.seeders.uploadChunk './other6/*.jpg' --chunk 30
 
 hub:
 	docker tag $(IMAGE_NAME):$(VERSION) $(DOCKER_HUB_ID)/$(IMAGE_NAME):$(VERSION)
