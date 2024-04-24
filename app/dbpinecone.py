@@ -48,7 +48,8 @@ class DbPinecone(IdbVector):
     def delete(self, id)->None:
         return self.index.delete(ids=[id])
     
-    # def get_all(self, page, size, ids, include):
-    #     return self.index.list_paginated(
-    #         limit=size,
-    #     )
+    def datatable(self, page, size, ids, include):
+        rest = self.index.describe_index_stats()
+        return {
+            'total_vector_count': rest.get('total_vector_count', 0),  
+        }

@@ -3,10 +3,11 @@ services:
   app:
     hostname: facial-reload
     container_name: facial-reload
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    image: facial-reload
+    image : jorgevasquezutec/facial-recognition-reload:v1.0.0
+    # build:
+    #   context: ./
+    #   dockerfile: Dockerfile
+    # image: facial-reload
     volumes:
       - ./:/app
       - ./weights:/root/.deepface/weights/
@@ -15,7 +16,9 @@ services:
     networks:
       - api-network
     env_file:
-      - ./.env
+      - ./.env.local
+    depends_on:
+      - chroma
   chroma:
     hostname: chroma
     container_name: chroma

@@ -20,6 +20,10 @@ class IdbVector(ABC):
     @abstractmethod
     def delete(self, id)->None:
         pass
+    
+    @abstractmethod
+    def datatable(self, page, size, ids, include):
+        pass
     # @abstractmethod
     # def get_all(self, page, size, ids, include):
     #     pass

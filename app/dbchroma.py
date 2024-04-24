@@ -27,7 +27,7 @@ class DbChroma(IdbVector):
         self.path = path
         self.name_collection = name_collection
         self.detector = detector
-        self.client = chromadb.HttpClient(host=api_settings.CHROMA_HOST,port=api_settings.CHROMA_PORT)
+        self.client = chromadb.HttpClient(host=api_settings.HOST_CHROMA,port=api_settings.PORT_CHROMA)
         # self.client = chromadb.PersistentClient(path=self.path,settings=Settings(allow_reset=True))
         self.collection : Collection = self.client.get_or_create_collection(self.name_collection,
         embedding_function=DeepFaceEmbedding(self.detector), metadata=CHROMA_METADATA)
@@ -124,26 +124,26 @@ class DbChroma(IdbVector):
     #     self.collection.delete(
     #         ids=[id]
     #     )
-    # def count(self):
-    #     return self.collection.count()
+    def count(self):
+        return self.collection.count()
     
 
-    # def datatable(self, page=0, size=10 , ids: list[str] = [] , include: list[str] = []):
-    #     data = self.collection.get(
-    #         limit=size,
-    #         offset=(page*size),
-    #         ids=ids,
-    #         include=include
-    #     )
-    #     total = self.collection.count()
+    def datatable(self, page=0, size=10 , ids: list[str] = [] , include: list[str] = []):
+        data = self.collection.get(
+            limit=size,
+            offset=(page*size),
+            ids=ids,
+            include=include
+        )
+        total = self.collection.count()
 
-    #     return {
-    #         "items": data,
-    #         "total": total,
-    #         "page": page,
-    #         "pages": (total+size-1)//size,
-    #         "size": size
-    #     }
+        return {
+            "items": data,
+            "total": total,
+            "page": page,
+            "pages": (total+size-1)//size,
+            "size": size
+        }
 
     # def getCollection(self):
     #     return self.collection

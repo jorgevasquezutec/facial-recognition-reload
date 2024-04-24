@@ -5,6 +5,13 @@ GZIP_FILE = $(TAR_FILE).gz
 DOCKER_HUB_ID= jorgevasquezutec
 
 
+build-image:
+	docker build -t $(IMAGE_NAME):$(VERSION) .
+
+save-image: build-image
+	docker save -o $(TAR_FILE) $(IMAGE_NAME):$(VERSION) 
+	gzip -f $(TAR_FILE)
+
 conda-update:
 	conda env update --prune -f environment.yml
 

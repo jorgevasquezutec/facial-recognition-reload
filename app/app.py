@@ -6,6 +6,9 @@ from app.api.api import api_router
 import uvicorn
 
 
+print(api_settings)
+
+
 docs_url = f'{api_settings.API_PREFIX}/docs'
 
 app = FastAPI(

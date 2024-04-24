@@ -10,14 +10,14 @@ from app.model import ListMatched
 
 
 
-# def datatable(
-#     db: DbChroma,
-#     page : int = 0,
-#     size : int = 10,
-#     ids: list[str] = [],
-#     include: list[str] = []
-# ):
-#     return db.datatable(page, size,ids,include)
+def datatable(
+    db: IdbVector,
+    page : int = 0,
+    size : int = 10,
+    ids: list[str] = [],
+    include: list[str] = []
+):
+    return db.datatable(page, size,ids,include)
 
 def get_doc_embeding(db:IdbVector,document_number:str):
     exists = db.get(document_number)

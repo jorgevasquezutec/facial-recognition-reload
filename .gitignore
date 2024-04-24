@@ -9,3 +9,4 @@ progress.txt
 results.csv
 .env.chroma
 other/
+.env.local

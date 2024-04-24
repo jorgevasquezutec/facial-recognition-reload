@@ -5,6 +5,7 @@ from app.config.constants import CHROMA_PATH, COLLECTION, N_RESULTS, CHROMA_META
 from app.dbchroma import DbChroma
 from app.idbVector import IdbVector
 from app.dbpinecone import DbPinecone
+from app.config.settings import api_settings
 
 model = ModelType.Facenet.value
 distance_metric = DistanceMetricType.cosine.value
@@ -34,7 +35,19 @@ class PineConeInstace():
         return cls.instance
 
 
-db : IdbVector  = ChromaInstance()
+
+defaultInstance = ChromaInstance()
+dictInstance = {
+    "chroma": defaultInstance,
+    "pinecone": PineConeInstace()
+}
+
+def get_db_intaces():
+    name = api_settings.DB_VECTOR
+    return dictInstance.get(name,defaultInstance)
+
+
+db : IdbVector  = get_db_intaces()
 detector : FaceDetector = DetectorInstance()
 
 async def get_db():

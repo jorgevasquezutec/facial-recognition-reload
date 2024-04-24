@@ -13,10 +13,9 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     AUTH_ROUTE: str
     PINECONE_API_KEY: str
-    CHROMA_HOST: str
-    CHROMA_PORT: int
-
-
+    HOST_CHROMA: str
+    PORT_CHROMA: int
+    DB_VECTOR: str
 
 
 api_settings =Settings(_env_file='.env', _env_file_encoding='utf-8')

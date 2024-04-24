@@ -6,3 +6,9 @@ query/
 __pycache__
 other/
 db/
+progress.txt
+results.csv
+FaceRecognition.jpg
+weights/
+swarm/
+testing.py

@@ -4,24 +4,24 @@ from app.utils.security import get_current_active_user
 from fastapi import Depends
 from typing_extensions import Annotated
 from app.api.facial.validations import validate_file_size_type
-from app.api.facial.service import upload_face, detect_face, delete_face, update_face,get_doc_embeding
+from app.api.facial.service import upload_face, detect_face, delete_face, update_face,get_doc_embeding,datatable
 from app.dependency import get_db, get_face_detector
 
 router = APIRouter(dependencies=[Depends(get_current_active_user)])
 
 
-# @router.get("") 
-# def facial_list(
-#     page: int = Query(0, title="Page", description="Page Number"),
-#     size: int = Query(10, title="Size", description="Page Size"),
-#     ids: List[str] = Query([], title="Ids", description="List of Ids"),
-#     include: List[str] = Query([], title="Include", description="List of Include", example=['embeddings'], alias="include"),
-#     db = Depends(get_db)
-# ):
-#     try:
-#         return datatable(db,page, size, ids, include)
-#     except Exception as e:
-#         raise HTTPException(status_code=400, detail=str(e))
+@router.get("") 
+def facial_list(
+    page: int = Query(0, title="Page", description="Page Number"),
+    size: int = Query(10, title="Size", description="Page Size"),
+    ids: List[str] = Query([], title="Ids", description="List of Ids"),
+    include: List[str] = Query([], title="Include", description="List of Include", example=['embeddings'], alias="include"),
+    db = Depends(get_db)
+):
+    try:
+        return datatable(db,page, size, ids, include)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("{document_number}")
